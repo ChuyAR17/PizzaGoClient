@@ -78,6 +78,7 @@
             android:gravity="center">
 
             <Button
+                android:id="@+id/PizzaButtonMenos"
                 android:layout_width="@dimen/square"
                 android:layout_height="@dimen/square"
                 android:text="-"
@@ -86,6 +87,7 @@
                 android:theme="@style/RaisedButton"/>
 
             <TextView
+                android:id="@+id/PizzaNoCantidad"
                 android:layout_width="@dimen/square"
                 android:layout_height="@dimen/square"
                 android:text="0"
@@ -95,6 +97,7 @@
                 android:background="@color/primaryWhiteText"/>
 
             <Button
+                android:id="@+id/PizzaButtonMas"
                 android:layout_width="@dimen/square"
                 android:layout_height="@dimen/square"
                 android:text="+"

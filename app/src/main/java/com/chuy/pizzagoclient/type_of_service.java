@@ -28,7 +28,7 @@ public class type_of_service extends AppCompatActivity {
         domicilio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), Menus.class));
+                startActivity(new Intent(getApplicationContext(), PickOnLocal.class));
             }
         });
 

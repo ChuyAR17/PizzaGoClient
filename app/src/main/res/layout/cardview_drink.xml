@@ -72,6 +72,7 @@
                     android:gravity="center">
 
                     <Button
+                        android:id="@+id/DrinkButtonMenos"
                         android:layout_width="@dimen/square"
                         android:layout_height="@dimen/square"
                         android:text="-"
@@ -80,6 +81,7 @@
                         android:theme="@style/RaisedButton"/>
 
                     <TextView
+                        android:id="@+id/DrinkNoCantidad"
                         android:layout_width="@dimen/square"
                         android:layout_height="@dimen/square"
                         android:text="0"
@@ -89,6 +91,7 @@
                         android:background="@android:color/white"/>
 
                     <Button
+                        android:id="@+id/DrinkButtonMas"
                         android:layout_width="@dimen/square"
                         android:layout_height="@dimen/square"
                         android:text="+"

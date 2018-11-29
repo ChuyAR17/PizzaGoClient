@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +22,9 @@ public class DrinkAdapterRecycler extends RecyclerView.Adapter<DrinkAdapterRecyc
     private ArrayList<Drink> drinks;
     private int resource;
     private Activity activity;
+
+    private int porciones;
+    private String numero;
 
     public DrinkAdapterRecycler(ArrayList<Drink> drinks, int resource, Activity activity) {
         this.drinks = drinks;
@@ -53,11 +57,56 @@ public class DrinkAdapterRecycler extends RecyclerView.Adapter<DrinkAdapterRecyc
         TextView drinkTittle;
         TextView drinkCost;
 
+        private Button mas, menos;
+        public TextView noPociones;
+
         public DrinkViewHolder(@NonNull View itemView) {
             super(itemView);
 
             drinkTittle = itemView.findViewById(R.id.CardMenuDrinkTittle);
             drinkCost = itemView.findViewById(R.id.CardMenuDrinkCost);
+
+            mas = itemView.findViewById(R.id.DrinkButtonMas);
+            menos = itemView.findViewById(R.id.DrinkButtonMenos);
+            noPociones = itemView.findViewById(R.id.DrinkNoCantidad);
+
+            mas.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    numero = noPociones.getText().toString();
+                    sumar();
+                    noPociones.setText(String.valueOf(porciones));
+                }
+            });
+
+            menos.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    numero = noPociones.getText().toString();
+                    restar();
+                    noPociones.setText(String.valueOf(porciones));
+                }
+            });
         }
+
+        private void restar() {
+            if (numero == null)
+                numero = "0";
+            porciones = Integer.parseInt(numero);
+            if ( porciones > 0) {
+                porciones--;
+            }else {
+                porciones = 0;
+            }
+
+        }
+
+        private void sumar() {
+            if (numero == null)
+                numero = "0";
+            porciones = Integer.parseInt(numero);
+            porciones += 1;
+        }
+
     }
 }

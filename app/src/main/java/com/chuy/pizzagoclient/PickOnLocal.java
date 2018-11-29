@@ -20,7 +20,7 @@ public class PickOnLocal extends FragmentActivity implements OnMapReadyCallback 
         setContentView(R.layout.activity_pick_on_local);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+                .findFragmentById(R.id.MapOnLocal);
         mapFragment.getMapAsync(this);
     }
 

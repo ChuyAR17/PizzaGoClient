@@ -47,9 +47,9 @@ public class Drinks extends AppCompatActivity {
 
     private ArrayList<Drink> buildDrinks() {
         ArrayList<Drink> drinks = new ArrayList<>();
-        drinks.add(new Drink("no hay", "Boneless", "50.00"));
-        drinks.add(new Drink("no hay", "Papas Fritas", "30.00"));
-        drinks.add(new Drink("no hay", "Palitos de queso", "45.00"));
+        drinks.add(new Drink("no hay", "Coca-cola", "50.00"));
+        drinks.add(new Drink("no hay", "Sprite", "30.00"));
+        drinks.add(new Drink("no hay", "Horchata", "45.00"));
 
         return drinks;
     }

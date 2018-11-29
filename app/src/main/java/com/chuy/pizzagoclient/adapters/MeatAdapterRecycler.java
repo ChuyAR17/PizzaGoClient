@@ -7,8 +7,10 @@ import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chuy.pizzagoclient.R;
 import com.chuy.pizzagoclient.models.Meat;
@@ -20,6 +22,9 @@ public class MeatAdapterRecycler extends RecyclerView.Adapter<MeatAdapterRecycle
     private ArrayList<Meat> meats;
     private int resources;
     private Activity activity;
+
+    private int porciones;
+    private String numero;
 
     public MeatAdapterRecycler(ArrayList<Meat> meats, int resources, Activity activity) {
         this.meats = meats;
@@ -50,10 +55,58 @@ public class MeatAdapterRecycler extends RecyclerView.Adapter<MeatAdapterRecycle
         private ImageView meatPicture;
         private TextView meatTittle;
 
+        private Button mas, menos;
+        public TextView noPociones;
+
         public MeatViewHolder(@NonNull View itemView) {
             super(itemView);
 
             meatTittle = itemView.findViewById(R.id.TypeOfMeatTittle);
+
+            mas = itemView.findViewById(R.id.MeatButtonMas);
+            menos = itemView.findViewById(R.id.MeatButtonMenos);
+            noPociones = itemView.findViewById(R.id.MeatNoPorciones);
+
+            //numero = noPociones.getText().toString();
+
+            mas.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    numero = noPociones.getText().toString();
+                    sumar();
+                    noPociones.setText(String.valueOf(porciones));
+                }
+            });
+
+            menos.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    numero = noPociones.getText().toString();
+                    restar();
+                    noPociones.setText(String.valueOf(porciones));
+                }
+            });
         }
+
+        private void restar() {
+            if (numero == null)
+                numero = "0";
+            porciones = Integer.parseInt(numero);
+            if ( porciones > 0) {
+                porciones--;
+            }else {
+                porciones = 0;
+            }
+
+        }
+
+        private void sumar() {
+            if (numero == null)
+                numero = "0";
+            porciones = Integer.parseInt(numero);
+            porciones += 1;
+        }
+
     }
+
 }

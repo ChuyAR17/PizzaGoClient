@@ -19,4 +19,5 @@
     <dimen name="tittle_top_margin">10dp</dimen>
     <dimen name="circle_pizza">30dp</dimen>
     <dimen name="detail_image">230dp</dimen>
+    <dimen name="text_no_portions">30dp</dimen>
 </resources>
