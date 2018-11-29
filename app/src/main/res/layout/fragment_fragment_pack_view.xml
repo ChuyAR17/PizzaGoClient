@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.FragmentPackView">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/ColorBackground">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/detail_image"
+            android:background="@drawable/pizza_le"
+            android:orientation="vertical"
+            android:gravity="bottom"
+            android:layout_marginBottom="@dimen/tittle_top_margin">
+
+            <TextView
+                android:id="@+id/MenuPackViewTittle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pack_content"
+                android:textSize="@dimen/subtitles_size"
+                android:layout_marginLeft="@dimen/lateral_margin"
+                android:textColor="@color/primaryWhiteText"/>
+
+            <TextView
+                android:id="@+id/MenuPackViewCost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$ 110.00 mxm"
+                android:textSize="@dimen/normaltext_size"
+                android:layout_marginLeft="@dimen/lateral_margin"
+                android:textColor="@color/primaryWhiteText"
+                android:layout_marginBottom="@dimen/lateral_margin"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pack_content"
+            android:textSize="@dimen/subtitles_size"
+            android:layout_marginLeft="@dimen/lateral_margin"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/tittle_top_margin"
+            android:layout_marginLeft="40dp">
+
+            <TextView
+                android:id="@+id/MenuPackViewContent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </ScrollView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/cantidad"
+            android:textSize="@dimen/subtitles_size"
+            android:layout_marginLeft="@dimen/lateral_margin"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/tittle_top_margin"
+            android:gravity="center">
+
+            <Button
+                android:layout_width="@dimen/square"
+                android:layout_height="@dimen/square"
+                android:text="-"
+                android:textSize="30sp"
+                android:paddingTop="0dp"
+                android:theme="@style/RaisedButton"/>
+
+            <TextView
+                android:layout_width="@dimen/square"
+                android:layout_height="@dimen/square"
+                android:text="0"
+                android:textSize="30dp"
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:background="@color/primaryWhiteText"/>
+
+            <Button
+                android:layout_width="@dimen/square"
+                android:layout_height="@dimen/square"
+                android:text="+"
+                android:textSize="30sp"
+                android:paddingTop="0dp"
+                android:layout_gravity="end"
+                android:theme="@style/RaisedButton"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/subtotal"
+            android:textSize="@dimen/subtitles_size"
+            android:layout_marginLeft="@dimen/lateral_margin"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="$ 110.00 mxm"
+            android:textSize="@dimen/normaltext_size"
+            android:layout_marginLeft="40dp"/>
+
+        <Button
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:text="@string/add_order"
+            android:textSize="20sp"
+            android:gravity="center|bottom"
+            android:layout_gravity="center|bottom"
+            android:theme="@style/RaisedButton"
+            android:textColor="@color/primaryWhiteText"/>
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    tools:context=".MenuNormal">
+
+    <include layout="@layout/toolbar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:id="@+id/menu_normal_pizzas"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:layout_weight="0.25"
+            android:background="@drawable/menu_pizza"
+            android:gravity="bottom">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/menu_normal_pizzas"
+                android:textSize="25sp"
+                android:textColor="@color/primaryWhiteText"
+                android:gravity="bottom"
+                android:background="#50ffffff"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:paddingBottom="20dp"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/primaryWhiteText"/>
+
+        <LinearLayout
+            android:id="@+id/menu_normal_aperitivos"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:layout_weight="0.25"
+            android:background="@drawable/aperitives"
+            android:gravity="bottom">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/menu_normal_aperitivos"
+                android:textSize="25sp"
+                android:textColor="@color/primaryWhiteText"
+                android:gravity="bottom"
+                android:background="#50ffffff"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:paddingBottom="20dp"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/primaryWhiteText"/>
+
+        <LinearLayout
+            android:id="@+id/menu_normal_bebidas"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:layout_weight="0.25"
+            android:background="@drawable/bebidas"
+            android:gravity="bottom">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/menu_normal_bebidas"
+                android:textSize="25sp"
+                android:textColor="@color/primaryWhiteText"
+                android:gravity="bottom"
+                android:background="#50ffffff"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:paddingBottom="20dp"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/primaryWhiteText"/>
+
+        <LinearLayout
+            android:id="@+id/menu_normal_paquetes"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:layout_weight="0.25"
+            android:background="@drawable/paquetes"
+            android:gravity="bottom">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/menu_normal_paquetes"
+                android:textSize="25sp"
+                android:gravity="bottom"
+                android:background="#50ffffff"
+                android:textAlignment="center"
+                android:textColor="@color/primaryWhiteText"
+                android:textStyle="bold"
+                android:paddingBottom="20dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

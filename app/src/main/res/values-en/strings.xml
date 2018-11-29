@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="name_app">PizzaGo</string>
+    <string name="bienvenido">¡Bienvenido!</string>
+    <string name="recoger_local">Recoger en local</string>
+    <string name="a_domicilio">A domicilio</string>
+    <string name="selecciona_una">Selecciona una opción</string>
+    <string name="arma_tu_pizza">Arma tu pizza</string>
+    <string name="menu_normal">Menú normal</string>
+    <string name="menu_normal_paquetes">Paquetes</string>
+    <string name="menu_normal_bebidas">Bebidas</string>
+    <string name="menu_normal_pizzas">Pizzas</string>
+
+    <string name="tab_dough">Masas</string>
+    <string name="tab_sauce">Salsas</string>
+    <string name="tab_cheese">Quesos</string>
+    <string name="tab_meat">Carnes</string>
+    <string name="tab_extras">Extras</string>
+    <string name="cheese_tittle">Elige tu queso</string>
+    <string name="dough_tittle">Escoge tu masa</string>
+    <string name="dough_size">Ancho de la masa</string>
+    <string name="kind_of_dough">Tipo de masa</string>
+    <string name="sauce_tittle">Selecciona la salsa</string>
+    <string name="meat_tittle">¿Qué carnes te gustan?</string>
+    <string name="extras_tittle">Ingredientes extras</string>
+    <string name="porciones">Porciones:</string>
+    <string name="extracheese">Costo porción extra: $</string>
+    <string name="masa_delgada">Delgada</string>
+    <string name="masa_guresa">Gruesa</string>
+    <string name="harina_integral">Harina integral</string>
+    <string name="cost_each_drink">Costo c/u $</string>
+    <string name="cantidad">Cantidad:</string>
+    <string name="pizza_ingredients">Ingredientes:</string>
+    <string name="subtotal">Subtotal:</string>
+    <string name="add_order">Agregar a la orden</string>
+    <string name="pack_content">Contenido:</string>
+    <string name="packs">Paquetes</string>
+    <string name="menu">Menú</string>
+    <string name="aperitives">Aperitivos</string>
+    <string name="drinks">Bebidas</string>
+    <string name="order_ready">¡Orden Lista!</string>
+</resources>

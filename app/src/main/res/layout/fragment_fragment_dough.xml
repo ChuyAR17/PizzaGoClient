@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.FragmentDough">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/ColorBackground">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dough_tittle"
+            android:textSize="@dimen/tittles_size"
+            android:textColor="@android:color/black"
+            android:textAlignment="center"
+            android:layout_marginTop="@dimen/tittle_top_margin"
+            android:layout_marginBottom="@dimen/tittle_top_margin"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/detail_image"
+            android:background="@drawable/masa_pizza"
+            android:layout_marginLeft="@dimen/tittle_top_margin"
+            android:layout_marginRight="@dimen/tittle_top_margin"
+            android:layout_marginBottom="@dimen/lateral_margin"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dough_size"
+            android:textSize="@dimen/subtitles_size"
+            android:layout_marginLeft="@dimen/lateral_margin"/>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/MasaDelgada"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/masa_delgada"
+                android:textSize="@dimen/normaltext_size"
+                android:checked="true"
+                android:layout_marginLeft="@dimen/lateral_margin"
+                android:layout_marginRight="@dimen/tittle_top_margin"/>
+
+            <RadioButton
+                android:id="@+id/MasaGruesa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/masa_delgada"
+                android:textSize="@dimen/normaltext_size"
+                android:checked="false"/>
+
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/kind_of_dough"
+            android:textSize="@dimen/subtitles_size"
+            android:layout_marginLeft="@dimen/lateral_margin"
+            android:layout_marginTop="@dimen/lateral_margin"/>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/HarinaNormal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/masa_delgada"
+                android:textSize="@dimen/normaltext_size"
+                android:checked="true"
+                android:layout_marginLeft="@dimen/lateral_margin"
+                android:layout_marginRight="@dimen/tittle_top_margin"/>
+
+            <RadioButton
+                android:id="@+id/HarinaIntegral"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/masa_delgada"
+                android:textSize="@dimen/normaltext_size"
+                android:checked="false"/>
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

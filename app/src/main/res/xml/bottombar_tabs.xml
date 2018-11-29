@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        id="@+id/tab_dough"
+        tittle="@string/tab_dough"
+        barColorWhenSelected="@color/colorPrimary"
+        icon="@drawable/ic_dough"
+        heigth="30dp"/>
+    <tab
+        id="@+id/tab_sauce"
+        tittle="@string/tab_sauce"
+        barColorWhenSelected="@color/colorPrimary"
+        icon="@drawable/ic_sauce"/>
+    <tab
+        id="@+id/tab_cheese"
+        tittle="@string/tab_cheese"
+        barColorWhenSelected="@color/colorPrimary"
+        icon="@drawable/ic_cheese"/>
+    <tab
+        id="@+id/tab_meat"
+        tittle="@string/tab_meat"
+        barColorWhenSelected="@color/colorPrimary"
+        icon="@drawable/ic_meat"/>
+    <tab
+        id="@+id/tab_extras"
+        tittle="@string/tab_extras"
+        barColorWhenSelected="@color/colorPrimary"
+        icon="@drawable/ic_extras"/>
+</tabs>
