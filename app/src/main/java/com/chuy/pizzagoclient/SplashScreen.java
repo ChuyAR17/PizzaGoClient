@@ -22,12 +22,15 @@ import android.widget.Toast;
 import java.net.ConnectException;
 import java.security.Permission;
 
+import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.Manifest.permission.INTERNET;
 
 public class SplashScreen extends AppCompatActivity {
 
-    private static final int MY_REQUEST_CODE = 1;
-    private static final int SPLASH_TIME = 3000;
+    private static final int MULTIPLE_PERMISSIONS_CODE = 3;
+    private String[] permissions = new String[]{Manifest.permission.INTERNET, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
+    private static final int SPLASH_TIME = 1500;
     private ProgressBar loader;
 
     @Override
@@ -37,27 +40,14 @@ public class SplashScreen extends AppCompatActivity {
 
         loader = findViewById(R.id.loader_splash_screen);
 
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
-            if (ContextCompat.checkSelfPermission(getApplicationContext(), INTERNET) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, MY_REQUEST_CODE);
-            }
-        }
-
-        if (checkInternetConnection()){
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    startActivity(new Intent(SplashScreen.this, type_of_service.class));
-                }
-            }, SPLASH_TIME);
-        }else {
-            Toast.makeText(getApplicationContext(), "No hay conexión a Internet", Toast.LENGTH_SHORT).show();
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    finish();
-                }
-            }, SPLASH_TIME);
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), permissions[0]) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(getApplicationContext(), permissions[1]) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(getApplicationContext(), permissions[2]) == PackageManager.PERMISSION_GRANTED) {
+            changeScreen();
+        }else if (ContextCompat.checkSelfPermission(getApplicationContext(), permissions[0]) != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(getApplicationContext(), permissions[1]) != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(getApplicationContext(), permissions[2]) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(SplashScreen.this, permissions, MULTIPLE_PERMISSIONS_CODE);
         }
 
     }
@@ -70,15 +60,46 @@ public class SplashScreen extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == MY_REQUEST_CODE) {
-            if (grantResults.length > 0){
-                startActivity(new Intent(this, Menus.class));
-                //checkInternetConnection();
-            }else {
-                Toast.makeText(getApplicationContext(), "No hay permisos para internet", Toast.LENGTH_SHORT).show();
-                finish();
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case MULTIPLE_PERMISSIONS_CODE:
+                if (validatePermissions(grantResults)){
+                    changeScreen();
+                }else {
+                    Toast.makeText(getApplicationContext(), "No hay permisos para internet", Toast.LENGTH_SHORT).show();
+                    loader.setVisibility(View.INVISIBLE);
+                    finish();
+                }
+                break;
+        }
+    }
+
+    private void changeScreen() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (checkInternetConnection()){
+                    startActivity(new Intent(SplashScreen.this, type_of_service.class));
+                } else{
+                    Toast.makeText(getApplicationContext(), "Sin conexión a Internet", Toast.LENGTH_SHORT).show();
+                    loader.setVisibility(View.INVISIBLE);
+                    finish();
+                }
+            }
+        }, SPLASH_TIME);
+    }
+
+    private boolean validatePermissions(int[] grantResutls) {
+        boolean allGanted = false;
+        for (int i = 0; i < permissions.length; i++) {
+            if (grantResutls[i] == PackageManager.PERMISSION_GRANTED) {
+                allGanted = true;
+            } else {
+                allGanted = false;
+                break;
             }
         }
+        return allGanted;
     }
 
 

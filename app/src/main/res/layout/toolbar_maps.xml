@@ -39,7 +39,7 @@
                 android:id="@+id/MapTittleToolbar"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/tittle_toolbar"
+                android:textSize="18sp"
                 android:textColor="@android:color/white"
                 android:layout_weight="0.7"
                 android:textAlignment="center"

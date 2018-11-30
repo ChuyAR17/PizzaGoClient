@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1004443091307",
+    "firebase_url": "https://pizzagoclient.firebaseio.com",
+    "project_id": "pizzagoclient",
+    "storage_bucket": "pizzagoclient.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1004443091307:android:2a54cfbc5fb38a6a",
+        "android_client_info": {
+          "package_name": "com.chuy.pizzagoclient"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1004443091307-mba2l57jjuurj6lttjsv17q10g31hsif.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_rlmJFiNHMPFzjgT5roBbbC6fZ_SAqHs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
