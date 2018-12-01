@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -14,6 +15,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,13 +31,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.roughike.bottombar.BottomBar;
 
-public class PickOnLocal extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener {
+public class PickOnLocal extends FragmentActivity implements OnMapReadyCallback,
+        GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener {
 
     private GoogleMap mMap;
     LocationManager locationManager;
-    double longitudeBest, latitudeBest;
     double longitudeGPS, latitudeGPS;
-    double longitudeNetwork, latitudeNetwork;
 
     private BottomBar bottomBar;
     private ImageView backButton, carButton;
@@ -51,6 +52,14 @@ public class PickOnLocal extends FragmentActivity implements OnMapReadyCallback,
         mapFragment.getMapAsync(this);
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+
+        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+        latitudeGPS = location.getLatitude();
+        longitudeGPS = location.getLongitude();
 
         backButton = findViewById(R.id.MapBakcButton);
         tittle = findViewById(R.id.MapTittleToolbar);
@@ -73,7 +82,7 @@ public class PickOnLocal extends FragmentActivity implements OnMapReadyCallback,
         car.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Todavia no aplicado!!!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), Menus.class));
             }
         });
     }
@@ -81,31 +90,18 @@ public class PickOnLocal extends FragmentActivity implements OnMapReadyCallback,
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        MarkerOptions markerOptions = new MarkerOptions( );
-        MarkerOptions opcionDos = new MarkerOptions( );
-        latitudeGPS = 29.081707;
-        longitudeGPS = -110.962797;
-        LatLng latLng = new LatLng(29.089133, -110.965457);
-        LatLng latLng2 = new LatLng(latitudeGPS, longitudeGPS);
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            mMap.setMyLocationEnabled(true);
-            return;
-        }
-
-        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        markerOptions.position(latLng);
-        opcionDos.position(latLng2);
-        markerOptions.title("Aqui estas tu!");
         mMap.clear();
+
+        MarkerOptions markerOptions = new MarkerOptions( );
+
+        LatLng latLng = new LatLng(latitudeGPS, longitudeGPS);
+        markerOptions.position(latLng);
+        markerOptions.title("Aqui estas tu!");
+
         mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.addMarker(markerOptions);
-        mMap.addMarker(opcionDos);
 
         mMap.setOnMyLocationButtonClickListener(this);
-        mMap.setOnMyLocationClickListener(this);
     }
 
     @Override
