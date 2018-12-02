@@ -19,6 +19,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.roughike.bottombar.BottomBar;
@@ -41,16 +42,17 @@ public class HomeService extends FragmentActivity implements OnMapReadyCallback 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_service);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.MapOnLocal);
-        mapFragment.getMapAsync(this);
-
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(HomeService.this, permissions, LOCATION_PERMISSIONS);
             return;
         }
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.MapOnLocal);
+        mapFragment.getMapAsync(this);
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
@@ -113,25 +115,21 @@ public class HomeService extends FragmentActivity implements OnMapReadyCallback 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
         MarkerOptions markerOptions = new MarkerOptions( );
         LatLng latLng = new LatLng(latitudeGPS, longitudeGPS);
+        CameraPosition position = new CameraPosition.Builder()
+                .target(latLng)
+                .zoom(9)
+                .bearing(0)
+                .tilt(45)
+                .build();
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            mMap.setMyLocationEnabled(true);
-            return;
-        }
+        markerOptions.position(latLng)
+                .title("Aqui estas tu!");
 
-        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        markerOptions.position(latLng);
-        markerOptions.title("Aqui estas tu!");
-        mMap.clear();
-        mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(position));
         mMap.addMarker(markerOptions);
-
-        mMap.setOnMyLocationButtonClickListener(this);
-        mMap.setOnMyLocationClickListener(this);
     }
 
     @Override

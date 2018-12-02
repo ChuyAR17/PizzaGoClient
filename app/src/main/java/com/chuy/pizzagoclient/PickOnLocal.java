@@ -24,25 +24,24 @@ import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
+import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.roughike.bottombar.BottomBar;
 
 public class PickOnLocal extends FragmentActivity implements OnMapReadyCallback,
-        GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener {
+        GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener, LocationSource.OnLocationChangedListener {
 
     private static final int LOCATION_PERMISSIONS = 2;
     private GoogleMap mMap;
     LocationManager locationManager;
     double longitudeGPS, latitudeGPS;
-<<<<<<< HEAD
     private String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
     Location location;
-=======
->>>>>>> ed98f608cb998a7e9fd997c59e6e823329e4a011
 
     private BottomBar bottomBar;
     private ImageView backButton, carButton;
@@ -53,30 +52,23 @@ public class PickOnLocal extends FragmentActivity implements OnMapReadyCallback,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pick_on_local);
 
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        //location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+        latitudeGPS = location.getLatitude();
+        longitudeGPS = location.getLongitude();
+
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.MapOnHome);
         mapFragment.getMapAsync(this);
 
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-<<<<<<< HEAD
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(PickOnLocal.this, permissions, LOCATION_PERMISSIONS);
-            return;
-        }
 
-        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        //location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-=======
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-
-        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
->>>>>>> ed98f608cb998a7e9fd997c59e6e823329e4a011
-
-        latitudeGPS = location.getLatitude();
-        longitudeGPS = location.getLongitude();
+        Toast.makeText(getApplicationContext(), "posiciones: " +latitudeGPS + "..." + longitudeGPS, Toast.LENGTH_LONG).show();
 
         backButton = findViewById(R.id.MapBakcButton);
         tittle = findViewById(R.id.MapTittleToolbar);
@@ -105,59 +97,25 @@ public class PickOnLocal extends FragmentActivity implements OnMapReadyCallback,
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResutls) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResutls);
-        switch (requestCode) {
-            case LOCATION_PERMISSIONS:
-                if (validatePermission(grantResutls)){
-                    Toast.makeText(getApplicationContext(), "Ubicacion localizada", Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(getApplicationContext(), "Ocurrio un problema con los permisos!", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(this, type_of_service.class));
-                }
-                break;
-        }
-    }
-
-    private boolean validatePermission(int[] grantResutls) {
-        boolean allGranted = false;
-        for (int i =0; i < permissions.length; i++) {
-            if (grantResutls[i] == PackageManager.PERMISSION_GRANTED){
-                allGranted = true;
-            }else {
-                allGranted = false;
-                Toast.makeText(getApplicationContext(), "Tenemos que saber tu ubicacion...", Toast.LENGTH_SHORT).show();
-            }
-        }
-        return allGranted;
-    }
-
-    @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.clear();
 
+        LatLng latLng = new LatLng(latitudeGPS, longitudeGPS);
         MarkerOptions markerOptions = new MarkerOptions( );
-<<<<<<< HEAD
-        LatLng latLng = new LatLng(latitudeGPS, longitudeGPS);
+        CameraPosition position = new CameraPosition.Builder()
+                .target(latLng)
+                .zoom(8)
+                .bearing(0)
+                .tilt(45)
+                .build();
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            mMap.setMyLocationEnabled(true);
-            return;
-        }
-=======
->>>>>>> ed98f608cb998a7e9fd997c59e6e823329e4a011
+        markerOptions.position(latLng)
+                .title("TU")
+                .snippet("Esta es tu ubicacion");
 
-        LatLng latLng = new LatLng(latitudeGPS, longitudeGPS);
-        markerOptions.position(latLng);
-        markerOptions.title("Aqui estas tu!");
-
-        mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(position));
         mMap.addMarker(markerOptions);
 
-        mMap.setOnMyLocationButtonClickListener(this);
     }
 
     @Override
@@ -168,5 +126,11 @@ public class PickOnLocal extends FragmentActivity implements OnMapReadyCallback,
     @Override
     public void onMyLocationClick(@NonNull Location location) {
 
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        latitudeGPS = location.getLatitude();
+        longitudeGPS = location.getLongitude();
     }
 }
