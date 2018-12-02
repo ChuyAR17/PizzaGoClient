@@ -1,6 +1,7 @@
 package com.chuy.pizzagoclient;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,11 @@ import android.widget.Toast;
 
 import com.chuy.pizzagoclient.adapters.AperitiveAdapterRecycler;
 import com.chuy.pizzagoclient.models.Aperitive;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.roughike.bottombar.BottomBar;
 
 import java.util.ArrayList;
@@ -21,6 +27,12 @@ public class Aperitives extends AppCompatActivity {
     private BottomBar bottomBar;
     private ImageView backButton, carButton;
     TextView tittle;
+
+    private DatabaseReference database;
+    private String NODO_APERITIVOS = "/aperitivos";
+    private ArrayList<Aperitive> aperitives;
+    private AperitiveAdapterRecycler aperitiveAdapterRecycler;
+    private RecyclerView aperitiveRecycler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,24 +45,44 @@ public class Aperitives extends AppCompatActivity {
 
         showToolbar(backButton, tittle, carButton);
 
-        RecyclerView listMenuAperitives = findViewById(R.id.list_aperitives);
+        database = FirebaseDatabase.getInstance().getReference();
+
+        aperitiveRecycler = findViewById(R.id.list_aperitives);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        listMenuAperitives.setLayoutManager(linearLayoutManager);
+        aperitiveRecycler.setLayoutManager(linearLayoutManager);
 
-        AperitiveAdapterRecycler aperitiveAdapterRecycler = new AperitiveAdapterRecycler(buildAperitives(), R.layout.cardview_aperitives, this);
+        aperitiveAdapterRecycler = new AperitiveAdapterRecycler(buildAperitives(), R.layout.cardview_aperitives, this);
 
-        listMenuAperitives.setAdapter(aperitiveAdapterRecycler);
+        aperitiveRecycler.setAdapter(aperitiveAdapterRecycler);
 
     }
 
     private ArrayList<Aperitive> buildAperitives() {
-        ArrayList<Aperitive> aperitives = new ArrayList<>();
-        aperitives.add(new Aperitive("no hay", "Boneless", "50.00"));
-        aperitives.add(new Aperitive("no hay", "Papas Fritas", "30.00"));
-        aperitives.add(new Aperitive("no hay", "Palitos de queso", "45.00"));
+        final ArrayList<Aperitive> aperitives = new ArrayList<>();
+
+        database.child(NODO_APERITIVOS).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                aperitives.clear();
+                if (dataSnapshot.exists()){
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Aperitive aperitive = snapshot.getValue(Aperitive.class);
+                        aperitives.add(new Aperitive(aperitive.getNombre(), aperitive.getImagen(), aperitive.getCosto()));
+                    }
+                }
+                aperitiveAdapterRecycler.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+        });
 
         return aperitives;
     }

@@ -21,7 +21,6 @@
                 android:layout_height="135dp"
                 android:layout_marginTop="@dimen/lateral_margin"
                 android:layout_marginBottom="@dimen/lateral_margin"
-                android:background="@drawable/pizza_le"
                 android:layout_gravity="center"/>
 
             <TextView

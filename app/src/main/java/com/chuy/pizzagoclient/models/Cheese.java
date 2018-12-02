@@ -2,37 +2,39 @@ package com.chuy.pizzagoclient.models;
 
 public class Cheese {
 
-    private String cheeseName;
-    private String cheesePicture;
-    private String cheeseExtraCost;
+    private String nombre;
+    private String imagen;
+    private Long costo;
 
-    public Cheese(String cheeseName, String cheesePicture, String cheeseExtraCost) {
-        this.cheeseName = cheeseName;
-        this.cheesePicture = cheesePicture;
-        this.cheeseExtraCost = cheeseExtraCost;
+    public Cheese(){ }
+
+    public Cheese(String cheeseName, String cheesePicture, Long cheeseExtraCost) {
+        this.nombre = cheeseName;
+        this.imagen= cheesePicture;
+        this.costo = cheeseExtraCost;
     }
 
-    public String getCheeseName() {
-        return cheeseName;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setCheeseName(String cheeseName) {
-        this.cheeseName = cheeseName;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public String getCheesePicture() {
-        return cheesePicture;
+    public String getImagen() {
+        return imagen;
     }
 
-    public void setCheesePicture(String cheesePicture) {
-        this.cheesePicture = cheesePicture;
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
-    public String getCheeseExtraCost() {
-        return cheeseExtraCost;
+    public Long getCosto() {
+        return costo;
     }
 
-    public void setCheeseExtraCost(String cheeseExtraCost) {
-        this.cheeseExtraCost = cheeseExtraCost;
+    public void setCosto(Long costo) {
+        this.costo = costo;
     }
 }

@@ -1,15 +1,11 @@
 package com.chuy.pizzagoclient;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -21,15 +17,13 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMapOptions;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.roughike.bottombar.BottomBar;
 
-public class PickOnLocal extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener {
+public class HomeService extends FragmentActivity implements OnMapReadyCallback , GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener {
 
     private static final int LOCATION_PERMISSIONS = 2;
     private GoogleMap mMap;
@@ -45,21 +39,20 @@ public class PickOnLocal extends FragmentActivity implements OnMapReadyCallback,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pick_on_local);
-
+        setContentView(R.layout.activity_home_service);
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.MapOnHome);
+                .findFragmentById(R.id.MapOnLocal);
         mapFragment.getMapAsync(this);
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(PickOnLocal.this, permissions, LOCATION_PERMISSIONS);
+            ActivityCompat.requestPermissions(HomeService.this, permissions, LOCATION_PERMISSIONS);
             return;
         }
 
         location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        //location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
         latitudeGPS = location.getLatitude();
         longitudeGPS = location.getLongitude();
@@ -69,7 +62,6 @@ public class PickOnLocal extends FragmentActivity implements OnMapReadyCallback,
         carButton = findViewById(R.id.MapCheckOption);
 
         showToolbar(backButton, tittle, carButton);
-
     }
 
     private void showToolbar(ImageView back, TextView tittle, ImageView car) {

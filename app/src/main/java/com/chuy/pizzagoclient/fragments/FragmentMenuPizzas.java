@@ -1,6 +1,7 @@
 package com.chuy.pizzagoclient.fragments;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,9 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chuy.pizzagoclient.R;
+import com.squareup.picasso.Picasso;
 
 public class FragmentMenuPizzas extends Fragment {
 
@@ -18,6 +22,10 @@ public class FragmentMenuPizzas extends Fragment {
     private String numero;
     private Button mas, menos;
     public TextView noPociones;
+    private String nombre, costo, imagen, ingredientes;
+
+    private TextView pizzaName, pizzaCost;
+    private ImageView pizzaImage;
 
     public FragmentMenuPizzas() {
         // Required empty public constructor
@@ -29,11 +37,19 @@ public class FragmentMenuPizzas extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_fragment_menu_pizzas, container, false);
 
+        getSharedPreferences();
+
+        pizzaName = view.findViewById(R.id.MenuPizzaViewTittle);
+        pizzaCost = view.findViewById(R.id.MenuPizzaViewCost);
+        pizzaImage = view.findViewById(R.id.MenuPizzaViewImage);
+
+        Picasso.get().load(imagen).fit().into(pizzaImage);
+        pizzaName.setText(nombre);
+        pizzaCost.setText(costo + " mxn");
+
         mas = view.findViewById(R.id.PizzaButtonMas);
         menos = view.findViewById(R.id.PizzaButtonMenos);
         noPociones = view.findViewById(R.id.PizzaNoCantidad);
-
-        //numero = noPociones.getText().toString();
 
         mas.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +70,15 @@ public class FragmentMenuPizzas extends Fragment {
         });
 
         return view;
+    }
+
+    private void getSharedPreferences() {
+        SharedPreferences preferences = getActivity().getSharedPreferences("Pizza-seleccionada", Context.MODE_PRIVATE);
+
+        nombre = preferences.getString("nombre", "Pizza default");
+        costo = preferences.getString("costo", "150.00");
+        imagen = preferences.getString("imagen", "no hay imagen");
+
     }
 
     private void restar() {

@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.chuy.pizzagoclient.R;
 import com.chuy.pizzagoclient.models.Cheese;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -43,10 +44,10 @@ public class CheeseAdapterRecycler extends RecyclerView.Adapter<CheeseAdapterRec
     @Override
     public void onBindViewHolder(@NonNull CheeseViewHolder cheeseViewHolder, int i) {
         Cheese cheese = cheeses.get(i);
-        cheeseViewHolder.cheeseTittle.setText(cheese.getCheeseName());
-        cheeseViewHolder.cheeseExtraCost.setText(cheese.getCheeseExtraCost());
 
-        //Falta asignar la imagen del queso!!!!!!!!!
+        cheeseViewHolder.cheeseTittle.setText(cheese.getNombre());
+        cheeseViewHolder.cheeseExtraCost.setText(String.valueOf(cheese.getCosto()));
+        Picasso.get().load(cheese.getImagen()).resize(135, 135).into(cheeseViewHolder.cheesePictureCard);
     }
 
     @Override
@@ -73,8 +74,6 @@ public class CheeseAdapterRecycler extends RecyclerView.Adapter<CheeseAdapterRec
             mas = itemView.findViewById(R.id.CheeseButtonMas);
             menos = itemView.findViewById(R.id.CheeseButtonMenos);
             noPociones = itemView.findViewById(R.id.CheeseNoPorciones);
-
-            //numero = noPociones.getText().toString();
 
             mas.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -19,10 +19,9 @@
             <ImageView
                 android:id="@+id/CardMenuPackPicture"
                 android:layout_width="135dp"
-                android:layout_height="140dp"
+                android:layout_height="135dp"
                 android:layout_marginTop="@dimen/lateral_margin"
                 android:layout_marginBottom="@dimen/lateral_margin"
-                android:background="@drawable/pizza_le"
                 android:layout_gravity="center"/>
 
             <LinearLayout

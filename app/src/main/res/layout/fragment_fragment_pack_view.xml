@@ -12,34 +12,56 @@
         android:orientation="vertical"
         android:background="@color/ColorBackground">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/detail_image"
-            android:background="@drawable/pizza_le"
             android:orientation="vertical"
             android:gravity="bottom"
             android:layout_marginBottom="@dimen/tittle_top_margin">
+
+            <ImageView
+                android:id="@+id/MenuPackViewImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <TextView
                 android:id="@+id/MenuPackViewTittle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/pack_content"
-                android:textSize="@dimen/subtitles_size"
-                android:layout_marginLeft="@dimen/lateral_margin"
-                android:textColor="@color/primaryWhiteText"/>
+                android:background="#4D000000"
+                android:layout_above="@+id/MenuPackViewCost"
+                android:layout_alignStart="@+id/MenuPackViewImage"
+                android:layout_alignLeft="@+id/MenuPackViewImage"
+                android:layout_alignEnd="@+id/MenuPackViewImage"
+                android:layout_alignRight="@+id/MenuPackViewImage"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginEnd="168dp"
+                android:layout_marginRight="168dp"
+                android:layout_marginBottom="-2dp"
+                android:textColor="@color/primaryWhiteText"
+                android:textSize="@dimen/subtitles_size" />
 
             <TextView
                 android:id="@+id/MenuPackViewCost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="#4D000000"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="43dp"
+                android:layout_marginLeft="43dp"
+                android:layout_marginEnd="245dp"
+                android:layout_marginRight="245dp"
+                android:layout_marginBottom="12dp"
                 android:text="$ 110.00 mxm"
-                android:textSize="@dimen/normaltext_size"
-                android:layout_marginLeft="@dimen/lateral_margin"
                 android:textColor="@color/primaryWhiteText"
-                android:layout_marginBottom="@dimen/lateral_margin"/>
+                android:textSize="@dimen/normaltext_size" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <TextView
             android:layout_width="match_parent"

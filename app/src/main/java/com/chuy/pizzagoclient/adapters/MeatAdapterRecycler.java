@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.chuy.pizzagoclient.R;
 import com.chuy.pizzagoclient.models.Meat;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -42,7 +43,9 @@ public class MeatAdapterRecycler extends RecyclerView.Adapter<MeatAdapterRecycle
     @Override
     public void onBindViewHolder(@NonNull MeatViewHolder meatViewHolder, int i) {
         Meat meat = meats.get(i);
-        meatViewHolder.meatTittle.setText(meat.getMeatTittle());
+        meatViewHolder.meatTittle.setText(meat.getNombre());
+        meatViewHolder.meatCost.setText(String.valueOf(meat.getCosto()));
+        Picasso.get().load(meat.getImagen()).resize(135, 135).into(meatViewHolder.meatPicture);
     }
 
     @Override
@@ -54,6 +57,7 @@ public class MeatAdapterRecycler extends RecyclerView.Adapter<MeatAdapterRecycle
 
         private ImageView meatPicture;
         private TextView meatTittle;
+        private TextView meatCost;
 
         private Button mas, menos;
         public TextView noPociones;
@@ -62,12 +66,12 @@ public class MeatAdapterRecycler extends RecyclerView.Adapter<MeatAdapterRecycle
             super(itemView);
 
             meatTittle = itemView.findViewById(R.id.TypeOfMeatTittle);
+            meatPicture = itemView.findViewById(R.id.TypeOfMeatPicture);
+            meatCost = itemView.findViewById(R.id.TypeOfMeatExtraCost);
 
             mas = itemView.findViewById(R.id.MeatButtonMas);
             menos = itemView.findViewById(R.id.MeatButtonMenos);
             noPociones = itemView.findViewById(R.id.MeatNoPorciones);
-
-            //numero = noPociones.getText().toString();
 
             mas.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -3,6 +3,7 @@ package com.chuy.pizzagoclient.fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,10 +14,22 @@ import android.view.ViewGroup;
 import com.chuy.pizzagoclient.R;
 import com.chuy.pizzagoclient.adapters.PackAdapterRecycler;
 import com.chuy.pizzagoclient.models.Pack;
+import com.chuy.pizzagoclient.models.Pizza;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class FragmentPackList extends Fragment {
+
+    private DatabaseReference database;
+    private String NODO_PAQUETE = "/paquetes";
+    private ArrayList<Pack> packs;
+    private PackAdapterRecycler packAdapterRecycler;
+    private RecyclerView packRecycler;
 
     public FragmentPackList() {
         // Required empty public constructor
@@ -28,26 +41,45 @@ public class FragmentPackList extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_fragment_pack_list, container, false);
 
-        RecyclerView listPacksMenu = view.findViewById(R.id.list_packs);
+        database = FirebaseDatabase.getInstance().getReference();
+
+        packRecycler = view.findViewById(R.id.list_packs);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        listPacksMenu.setLayoutManager(linearLayoutManager);
+        packRecycler.setLayoutManager(linearLayoutManager);
 
-        PackAdapterRecycler packAdapterRecycler = new PackAdapterRecycler(buildPack(), R.layout.cardview_pack, getActivity());
+        packAdapterRecycler = new PackAdapterRecycler(buildPack(), R.layout.cardview_pack, getActivity());
 
-        listPacksMenu.setAdapter(packAdapterRecycler);
+        packRecycler.setAdapter(packAdapterRecycler);
 
         return view;
     }
 
     private ArrayList<Pack> buildPack() {
-        ArrayList<Pack> packs = new ArrayList<>();
+        packs = new ArrayList<>();
 
-        packs.add(new Pack("no hay", "Fiesta", "280.00"));
-        packs.add(new Pack("no hay", "Romantico", "350.00"));
-        packs.add(new Pack("no hay", "Graduacion", "250.00"));
+        database.child(NODO_PAQUETE).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                packs.clear();
+                if (dataSnapshot.exists()){
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Pack pack = snapshot.getValue(Pack.class);
+                        packs.add(new Pack(pack.getNombre(), pack.getImagen(), pack.getCosto(), pack.getPizza(), pack.getBebida(), pack.getAperitivo()));
+                    }
+                }
+                packAdapterRecycler.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+        });
 
         return packs;
     }

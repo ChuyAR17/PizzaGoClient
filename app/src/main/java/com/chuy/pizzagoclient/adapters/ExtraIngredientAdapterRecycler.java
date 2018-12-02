@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.chuy.pizzagoclient.R;
 import com.chuy.pizzagoclient.models.ExtraIngredient;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -43,7 +44,10 @@ public class ExtraIngredientAdapterRecycler extends RecyclerView.Adapter<ExtraIn
     public void onBindViewHolder(@NonNull ExtraIngredientViewHolder extraIngredientViewHolder, int i) {
         ExtraIngredient ingredient = ingredients.get(i);
 
-        extraIngredientViewHolder.extraIngredientTittle.setText(ingredient.getExtraIngredientTittle());
+        extraIngredientViewHolder.extraIngredientTittle.setText(ingredient.getNombre());
+        extraIngredientViewHolder.extraIngredientCost.setText(String.valueOf(ingredient.getCosto()));
+        Picasso.get().load(ingredient.getImagen()).resize(135,135).into(extraIngredientViewHolder.extraIngredientPicture);
+
     }
 
     @Override
@@ -55,6 +59,7 @@ public class ExtraIngredientAdapterRecycler extends RecyclerView.Adapter<ExtraIn
 
         ImageView extraIngredientPicture;
         TextView extraIngredientTittle;
+        TextView extraIngredientCost;
 
         private Button mas, menos;
         public TextView noPociones;
@@ -63,6 +68,8 @@ public class ExtraIngredientAdapterRecycler extends RecyclerView.Adapter<ExtraIn
             super(itemView);
 
             extraIngredientTittle = itemView.findViewById(R.id.ExtraIngredientTittle);
+            extraIngredientCost = itemView.findViewById(R.id.ExtraIngredientExtraCost);
+            extraIngredientPicture = itemView.findViewById(R.id.ExtraIngredientPicture);
 
             mas = itemView.findViewById(R.id.ExtrasButtonMas);
             menos = itemView.findViewById(R.id.ExtrasButtonMenos);

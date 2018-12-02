@@ -2,27 +2,39 @@ package com.chuy.pizzagoclient.models;
 
 public class Meat {
 
-    private String meatPicture;
-    private String meatTittle;
+    private String imagen;
+    private String nombre;
+    private Long costo;
 
-    public Meat(String meatPicture, String meatTittle) {
-        this.meatPicture = meatPicture;
-        this.meatTittle = meatTittle;
+    public Meat() { }
+
+    public Meat(String imagen, String nombre, Long costo) {
+        this.imagen = imagen;
+        this.nombre = nombre;
+        this.costo = costo;
     }
 
-    public String getMeatPicture() {
-        return meatPicture;
+    public String getImagen() {
+        return imagen;
     }
 
-    public void setMeatPicture(String meatPicture) {
-        this.meatPicture = meatPicture;
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
-    public String getMeatTittle() {
-        return meatTittle;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setMeatTittle(String meatTittle) {
-        this.meatTittle = meatTittle;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public Long getCosto() {
+        return costo;
+    }
+
+    public void setCosto(Long costo) {
+        this.costo = costo;
     }
 }

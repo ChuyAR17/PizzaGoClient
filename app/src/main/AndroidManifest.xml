@@ -13,8 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <uses-library android:name="org.apache.http.legacy" android:required="true" />
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="true" />
 
         <activity android:name=".SplashScreen">
             <intent-filter>
@@ -23,44 +24,51 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".type_of_service"></activity>
-        <activity android:name=".Menus"
+        <activity android:name=".type_of_service" />
+        <activity
+            android:name=".Menus"
             android:parentActivityName=".type_of_service">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".type_of_service" />
         </activity>
-        <activity android:name=".MenuNormal"
+        <activity
+            android:name=".MenuNormal"
             android:parentActivityName=".Menus">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Menus" />
         </activity>
-        <activity android:name=".MakeYourOwn"
+        <activity
+            android:name=".MakeYourOwn"
             android:parentActivityName=".Menus">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Menus" />
         </activity>
-        <activity android:name=".Pizzas"
+        <activity
+            android:name=".Pizzas"
             android:parentActivityName=".MenuNormal">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MenuNormal" />
         </activity>
-        <activity android:name=".Packs"
+        <activity
+            android:name=".Packs"
             android:parentActivityName=".MenuNormal">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MenuNormal" />
         </activity>
-        <activity android:name=".Aperitives"
+        <activity
+            android:name=".Aperitives"
             android:parentActivityName=".MenuNormal">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MenuNormal" />
         </activity>
-        <activity android:name=".Drinks"
+        <activity
+            android:name=".Drinks"
             android:parentActivityName=".MenuNormal">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -78,14 +86,16 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
         <activity
             android:name=".PickOnLocal"
-            android:label="@string/title_activity_pick_on_local"></activity>
+            android:label="@string/title_activity_pick_on_local" />
+        <activity
+            android:name=".HomeService"
+            android:label="@string/title_activity_home_service"></activity>
     </application>
 
 </manifest>

@@ -2,37 +2,40 @@ package com.chuy.pizzagoclient.models;
 
 public class Drink {
 
-    private String drinkPicture;
-    private String drinkTittle;
-    private String drinkCost;
+    private String nombre;
+    private String imagen;
+    private Long costo;
 
-    public Drink(String drinkPicture, String drinkTittle, String drinkCost) {
-        this.drinkPicture = drinkPicture;
-        this.drinkTittle = drinkTittle;
-        this.drinkCost = drinkCost;
+    public Drink() {
     }
 
-    public String getDrinkPicture() {
-        return drinkPicture;
+    public Drink(String nombre, String imagen, Long costo) {
+        this.nombre = nombre;
+        this.imagen = imagen;
+        this.costo = costo;
     }
 
-    public void setDrinkPicture(String drinkPicture) {
-        this.drinkPicture = drinkPicture;
+    public String getNombre() {
+        return nombre;
     }
 
-    public String getDrinkTittle() {
-        return drinkTittle;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public void setDrinkTittle(String drinkTittle) {
-        this.drinkTittle = drinkTittle;
+    public String getImagen() {
+        return imagen;
     }
 
-    public String getDrinkCost() {
-        return drinkCost;
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
-    public void setDrinkCost(String drinkCost) {
-        this.drinkCost = drinkCost;
+    public Long getCosto() {
+        return costo;
+    }
+
+    public void setCosto(Long costo) {
+        this.costo = costo;
     }
 }

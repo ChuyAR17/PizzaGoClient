@@ -28,8 +28,8 @@ import static android.Manifest.permission.INTERNET;
 
 public class SplashScreen extends AppCompatActivity {
 
-    private static final int MULTIPLE_PERMISSIONS_CODE = 3;
-    private String[] permissions = new String[]{Manifest.permission.INTERNET, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
+    private static final int INTERNET_CODE = 1;
+    private String[] permission = new String[]{Manifest.permission.INTERNET};
     private static final int SPLASH_TIME = 1500;
     private ProgressBar loader;
 
@@ -40,14 +40,10 @@ public class SplashScreen extends AppCompatActivity {
 
         loader = findViewById(R.id.loader_splash_screen);
 
-        if (ContextCompat.checkSelfPermission(getApplicationContext(), permissions[0]) == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(getApplicationContext(), permissions[1]) == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(getApplicationContext(), permissions[2]) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), permission[0]) == PackageManager.PERMISSION_GRANTED) {
             changeScreen();
-        }else if (ContextCompat.checkSelfPermission(getApplicationContext(), permissions[0]) != PackageManager.PERMISSION_GRANTED
-                || ContextCompat.checkSelfPermission(getApplicationContext(), permissions[1]) != PackageManager.PERMISSION_GRANTED
-                || ContextCompat.checkSelfPermission(getApplicationContext(), permissions[2]) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(SplashScreen.this, permissions, MULTIPLE_PERMISSIONS_CODE);
+        }else if (ContextCompat.checkSelfPermission(getApplicationContext(), permission[0]) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(SplashScreen.this, permission, INTERNET_CODE);
         }
 
     }
@@ -59,11 +55,11 @@ public class SplashScreen extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResutls) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResutls);
         switch (requestCode) {
-            case MULTIPLE_PERMISSIONS_CODE:
-                if (validatePermissions(grantResults)){
+            case INTERNET_CODE:
+                if (grantResutls[0] == PackageManager.PERMISSION_GRANTED){
                     changeScreen();
                 }else {
                     Toast.makeText(getApplicationContext(), "No hay permisos para internet", Toast.LENGTH_SHORT).show();
@@ -87,19 +83,6 @@ public class SplashScreen extends AppCompatActivity {
                 }
             }
         }, SPLASH_TIME);
-    }
-
-    private boolean validatePermissions(int[] grantResutls) {
-        boolean allGanted = false;
-        for (int i = 0; i < permissions.length; i++) {
-            if (grantResutls[i] == PackageManager.PERMISSION_GRANTED) {
-                allGanted = true;
-            } else {
-                allGanted = false;
-                break;
-            }
-        }
-        return allGanted;
     }
 
 

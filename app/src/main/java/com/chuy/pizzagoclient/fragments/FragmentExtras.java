@@ -3,6 +3,7 @@ package com.chuy.pizzagoclient.fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,10 +17,21 @@ import android.widget.TextView;
 import com.chuy.pizzagoclient.R;
 import com.chuy.pizzagoclient.adapters.ExtraIngredientAdapterRecycler;
 import com.chuy.pizzagoclient.models.ExtraIngredient;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class FragmentExtras extends Fragment {
+
+    private DatabaseReference database;
+    private String NODO_INGREDIENTE_EXTRA = "/ingredientes";
+    private ArrayList<ExtraIngredient> ingredients;
+    private ExtraIngredientAdapterRecycler ingredientsAdapterRecycler;
+    private RecyclerView extraRecycler;
 
     public FragmentExtras() {
         // Required empty public constructor
@@ -32,25 +44,44 @@ public class FragmentExtras extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_fragment_extras, container, false);
 
-        RecyclerView extraIngredientRecycler = view.findViewById(R.id.list_extras);
+        extraRecycler = view.findViewById(R.id.list_extras);
+
+        database = FirebaseDatabase.getInstance().getReference();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        extraIngredientRecycler.setLayoutManager(linearLayoutManager);
+        extraRecycler.setLayoutManager(linearLayoutManager);
 
-        ExtraIngredientAdapterRecycler extraIngredientAdapterRecycler = new ExtraIngredientAdapterRecycler(buildExtraIngredients(), R.layout.cardview_extras, getActivity());
+        ingredientsAdapterRecycler = new ExtraIngredientAdapterRecycler(buildExtraIngredients(), R.layout.cardview_extras, getActivity());
 
-        extraIngredientRecycler.setAdapter(extraIngredientAdapterRecycler);
+        extraRecycler.setAdapter(ingredientsAdapterRecycler);
 
         return view;
     }
 
     private ArrayList<ExtraIngredient> buildExtraIngredients() {
-        ArrayList<ExtraIngredient> ingredients = new ArrayList<>();
-        ingredients.add(new ExtraIngredient("No hay foto aun", "Champiñon"));
-        ingredients.add(new ExtraIngredient("No hay foto aun", "Tomate"));
-        ingredients.add(new ExtraIngredient("No hay foto aun", "Aceitunas"));
+        final ArrayList<ExtraIngredient> ingredients = new ArrayList<>();
+
+        database.child(NODO_INGREDIENTE_EXTRA).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                ingredients.clear();
+                if (dataSnapshot.exists()){
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        ExtraIngredient ingredient = snapshot.getValue(ExtraIngredient.class);
+                        ingredients.add(new ExtraIngredient(ingredient.getNombre(), ingredient.getImagen(), ingredient.getCosto()));
+                    }
+                }
+                ingredientsAdapterRecycler.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         return ingredients;
     }

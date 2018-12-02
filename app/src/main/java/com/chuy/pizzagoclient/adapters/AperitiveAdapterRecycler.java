@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.chuy.pizzagoclient.R;
 import com.chuy.pizzagoclient.models.Aperitive;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -39,9 +40,11 @@ public class AperitiveAdapterRecycler extends RecyclerView.Adapter<AperitiveAdap
 
     @Override
     public void onBindViewHolder(@NonNull AperitiveViewHolder aperitiveViewHolder, int i) {
+
         Aperitive aperitive = aperitives.get(i);
-        aperitiveViewHolder.aperitiveTittle.setText(aperitive.getAperitiveTittle());
-        aperitiveViewHolder.aperitiveCost.setText(aperitive.getAperitiveCost());
+        aperitiveViewHolder.aperitiveTittle.setText(aperitive.getNombre());
+        aperitiveViewHolder.aperitiveCost.setText(String.valueOf(aperitive.getCosto()));
+        Picasso.get().load(aperitive.getImagen()).resize(135,135).into(aperitiveViewHolder.aperitivePicture);
     }
 
     @Override
@@ -63,6 +66,7 @@ public class AperitiveAdapterRecycler extends RecyclerView.Adapter<AperitiveAdap
 
             aperitiveTittle = itemView.findViewById(R.id.CardMenuAperitivesTittle);
             aperitiveCost = itemView.findViewById(R.id.CardMenuAperitivesCost);
+            aperitivePicture = itemView.findViewById(R.id.CardMenuAperitivesPicture);
 
             mas = itemView.findViewById(R.id.AperitivesButtonMas);
             menos = itemView.findViewById(R.id.AperitivesButtonMenos);

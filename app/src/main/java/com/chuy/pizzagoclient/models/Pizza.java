@@ -1,37 +1,54 @@
 package com.chuy.pizzagoclient.models;
 
+import java.util.HashMap;
+import java.util.List;
+
 public class Pizza {
-    private String pizzaTittle;
-    private String pizzaPicture;
-    private String pizzaCost;
 
-    public Pizza(String pizzaTittle, String pizzaPicture, String pizzaCost) {
-        this.pizzaTittle = pizzaTittle;
-        this.pizzaPicture = pizzaPicture;
-        this.pizzaCost = pizzaCost;
+    private String nombre;
+    private String imagen;
+    private Long costo;
+    private HashMap<Integer,String> ingredientes;
+
+    public Pizza() {
     }
 
-    public String getPizzaTittle() {
-        return pizzaTittle;
+    public Pizza(String nombre, String imagen, Long costo, HashMap<Integer, String> ingredientes) {
+        this.nombre = nombre;
+        this.imagen = imagen;
+        this.costo = costo;
+        this.ingredientes = ingredientes;
     }
 
-    public void setPizzaTittle(String pizzaTittle) {
-        this.pizzaTittle = pizzaTittle;
+    public String getNombre() {
+        return nombre;
     }
 
-    public String getPizzaPicture() {
-        return pizzaPicture;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public void setPizzaPicture(String pizzaPicture) {
-        this.pizzaPicture = pizzaPicture;
+    public String getImagen() {
+        return imagen;
     }
 
-    public String getPizzaCost() {
-        return pizzaCost;
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
-    public void setPizzaCost(String pizzaCost) {
-        this.pizzaCost = pizzaCost;
+    public Long getCosto() {
+        return costo;
+    }
+
+    public void setCosto(Long costo) {
+        this.costo = costo;
+    }
+
+    public HashMap<Integer, String> getIngredientes() {
+        return ingredientes;
+    }
+
+    public void setIngredientes(HashMap<Integer, String> ingredientes) {
+        this.ingredientes = ingredientes;
     }
 }

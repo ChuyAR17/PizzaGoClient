@@ -1,6 +1,7 @@
 package com.chuy.pizzagoclient;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,11 @@ import android.widget.Toast;
 
 import com.chuy.pizzagoclient.adapters.DrinkAdapterRecycler;
 import com.chuy.pizzagoclient.models.Drink;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.roughike.bottombar.BottomBar;
 
 import java.util.ArrayList;
@@ -21,6 +27,12 @@ public class Drinks extends AppCompatActivity {
     private BottomBar bottomBar;
     private ImageView backButton, carButton;
     TextView tittle;
+
+    private DatabaseReference database;
+    private String NODO_BEBIDA = "/bebidas";
+    private ArrayList<Drink> drinks;
+    private DrinkAdapterRecycler drinkAdapterRecycler;
+    private RecyclerView drinkRecycler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,23 +45,42 @@ public class Drinks extends AppCompatActivity {
 
         showToolbar(backButton, tittle, carButton);
 
-        RecyclerView listMenuDrinks = findViewById(R.id.list_drinks);
+        database = FirebaseDatabase.getInstance().getReference();
+
+        drinkRecycler = findViewById(R.id.list_drinks);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        listMenuDrinks.setLayoutManager(linearLayoutManager);
+        drinkRecycler.setLayoutManager(linearLayoutManager);
 
-        DrinkAdapterRecycler drinkAdapterRecycler = new DrinkAdapterRecycler(buildDrinks(), R.layout.cardview_drink, this);
+        drinkAdapterRecycler = new DrinkAdapterRecycler(buildDrinks(), R.layout.cardview_drink, this);
 
-        listMenuDrinks.setAdapter(drinkAdapterRecycler);
+        drinkRecycler.setAdapter(drinkAdapterRecycler);
     }
 
     private ArrayList<Drink> buildDrinks() {
-        ArrayList<Drink> drinks = new ArrayList<>();
-        drinks.add(new Drink("no hay", "Coca-cola", "50.00"));
-        drinks.add(new Drink("no hay", "Sprite", "30.00"));
-        drinks.add(new Drink("no hay", "Horchata", "45.00"));
+        final ArrayList<Drink> drinks = new ArrayList<>();
+
+        database.child(NODO_BEBIDA).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                drinks.clear();
+                if (dataSnapshot.exists()){
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Drink drink = snapshot.getValue(Drink.class);
+                        drinks.add(new Drink(drink.getNombre(), drink.getImagen(), drink.getCosto()));
+                    }
+                }
+                drinkAdapterRecycler.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         return drinks;
     }

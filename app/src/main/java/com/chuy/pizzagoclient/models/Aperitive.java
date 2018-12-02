@@ -2,37 +2,40 @@ package com.chuy.pizzagoclient.models;
 
 public class Aperitive {
 
-    private String aperitivePicture;
-    private String aperitiveTittle;
-    private String aperitiveCost;
+    private String nombre;
+    private String imagen;
+    private Long costo;
 
-    public Aperitive(String aperitivePicture, String aperitiveTittle, String aperitiveCost) {
-        this.aperitivePicture = aperitivePicture;
-        this.aperitiveTittle = aperitiveTittle;
-        this.aperitiveCost = aperitiveCost;
+    public Aperitive() {
     }
 
-    public String getAperitivePicture() {
-        return aperitivePicture;
+    public Aperitive(String nombre, String imagen, Long costo) {
+        this.nombre = nombre;
+        this.imagen = imagen;
+        this.costo = costo;
     }
 
-    public void setAperitivePicture(String aperitivePicture) {
-        this.aperitivePicture = aperitivePicture;
+    public String getNombre() {
+        return nombre;
     }
 
-    public String getAperitiveTittle() {
-        return aperitiveTittle;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public void setAperitiveTittle(String aperitiveTittle) {
-        this.aperitiveTittle = aperitiveTittle;
+    public String getImagen() {
+        return imagen;
     }
 
-    public String getAperitiveCost() {
-        return aperitiveCost;
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
-    public void setAperitiveCost(String aperitiveCost) {
-        this.aperitiveCost = aperitiveCost;
+    public Long getCosto() {
+        return costo;
+    }
+
+    public void setCosto(Long costo) {
+        this.costo = costo;
     }
 }

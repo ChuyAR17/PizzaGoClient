@@ -3,6 +3,7 @@ package com.chuy.pizzagoclient.fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,12 +12,25 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.chuy.pizzagoclient.R;
+import com.chuy.pizzagoclient.adapters.CheeseAdapterRecycler;
 import com.chuy.pizzagoclient.adapters.PizzaAdapterRecycler;
+import com.chuy.pizzagoclient.models.Cheese;
 import com.chuy.pizzagoclient.models.Pizza;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class FragmentListMenuPizzas extends Fragment {
+
+    private DatabaseReference database;
+    private String NODO_PIZZAS = "/pizza";
+    private ArrayList<Pizza> pizzas;
+    private PizzaAdapterRecycler pizzaAdapterRecycler;
+    private RecyclerView pizzaRecycler;
 
     public FragmentListMenuPizzas() {
         // Required empty public constructor
@@ -28,26 +42,45 @@ public class FragmentListMenuPizzas extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_fragment_list_menu_pizzas, container, false);
 
-        RecyclerView listPizzasMenu = view.findViewById(R.id.list_pizzas);
+        database = FirebaseDatabase.getInstance().getReference();
+
+        pizzaRecycler = view.findViewById(R.id.list_pizzas);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        listPizzasMenu.setLayoutManager(linearLayoutManager);
+        pizzaRecycler.setLayoutManager(linearLayoutManager);
 
-        PizzaAdapterRecycler pizzaAdapterRecycler = new PizzaAdapterRecycler(buildPizzas(), R.layout.cardview_pizza, getActivity());
+        pizzaAdapterRecycler = new PizzaAdapterRecycler(buildPizzas(), R.layout.cardview_pizza, getActivity());
 
-        listPizzasMenu.setAdapter(pizzaAdapterRecycler);
+        pizzaRecycler.setAdapter(pizzaAdapterRecycler);
 
         return view;
     }
 
     private ArrayList<Pizza> buildPizzas() {
-        ArrayList<Pizza> pizzas = new ArrayList<>();
+        pizzas = new ArrayList<>();
 
-        pizzas.add(new Pizza("Pepperoni", "not implemented!!", "120.00"));
-        pizzas.add(new Pizza("Hawaiana", "not implemented!!", "110.00"));
-        pizzas.add(new Pizza("Carnes frias", "not implemented!!", "130.00"));
+        database.child(NODO_PIZZAS).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                pizzas.clear();
+                if (dataSnapshot.exists()){
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Pizza pizza = snapshot.getValue(Pizza.class);
+                        pizzas.add(new Pizza(pizza.getNombre(), pizza.getImagen(), pizza.getCosto(), pizza.getIngredientes()));
+                    }
+                }
+                pizzaAdapterRecycler.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         return pizzas;
     }
 

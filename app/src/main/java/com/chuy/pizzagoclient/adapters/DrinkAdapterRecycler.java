@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.chuy.pizzagoclient.R;
 import com.chuy.pizzagoclient.models.Drink;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -42,8 +43,9 @@ public class DrinkAdapterRecycler extends RecyclerView.Adapter<DrinkAdapterRecyc
     @Override
     public void onBindViewHolder(@NonNull DrinkViewHolder drinkViewHolder, int i) {
         Drink drink = drinks.get(i);
-        drinkViewHolder.drinkTittle.setText(drink.getDrinkTittle());
-        drinkViewHolder.drinkCost.setText(drink.getDrinkCost());
+        drinkViewHolder.drinkTittle.setText(drink.getNombre());
+        drinkViewHolder.drinkCost.setText(String.valueOf(drink.getCosto()));
+        Picasso.get().load(drink.getImagen()).resize(135,135).into(drinkViewHolder.drinkPicture);
     }
 
     @Override
@@ -65,6 +67,7 @@ public class DrinkAdapterRecycler extends RecyclerView.Adapter<DrinkAdapterRecyc
 
             drinkTittle = itemView.findViewById(R.id.CardMenuDrinkTittle);
             drinkCost = itemView.findViewById(R.id.CardMenuDrinkCost);
+            drinkPicture = itemView.findViewById(R.id.CardMenuDrinkPicture);
 
             mas = itemView.findViewById(R.id.DrinkButtonMas);
             menos = itemView.findViewById(R.id.DrinkButtonMenos);
