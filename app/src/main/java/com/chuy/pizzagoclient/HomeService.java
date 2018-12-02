@@ -15,14 +15,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.chuy.pizzagoclient.models.Locales;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.roughike.bottombar.BottomBar;
+
+import java.util.ArrayList;
+import java.util.Locale;
 
 public class HomeService extends FragmentActivity implements OnMapReadyCallback , GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener {
 
@@ -32,6 +42,9 @@ public class HomeService extends FragmentActivity implements OnMapReadyCallback 
     double longitudeGPS, latitudeGPS;
     private String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
     Location location;
+
+    private DatabaseReference database;
+    private String NODO_QUESO = "/locales";
 
     private BottomBar bottomBar;
     private ImageView backButton, carButton;
@@ -51,6 +64,8 @@ public class HomeService extends FragmentActivity implements OnMapReadyCallback 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.MapOnLocal);
         mapFragment.getMapAsync(this);
+
+        database = FirebaseDatabase.getInstance().getReference();
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
@@ -116,20 +131,41 @@ public class HomeService extends FragmentActivity implements OnMapReadyCallback 
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        MarkerOptions markerOptions = new MarkerOptions( );
-        LatLng latLng = new LatLng(latitudeGPS, longitudeGPS);
-        CameraPosition position = new CameraPosition.Builder()
-                .target(latLng)
-                .zoom(9)
-                .bearing(0)
-                .tilt(45)
-                .build();
+        final ArrayList<Locales> locales = new ArrayList<>();
 
-        markerOptions.position(latLng)
-                .title("Aqui estas tu!");
+        database.child(NODO_QUESO).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                locales.clear();
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Locales local = snapshot.getValue(Locales.class);
+                        locales.add(new Locales(local.getLatitud(), local.getLongitud(), local.getTitulo()));
+                    }
+                }
+                for (int i = 0; i < locales.size(); i++) {
+                    agregarMarcador(locales.get(i).getLatitud(), locales.get(i).getLongitud(), locales.get(i).getTitulo());
+                }
+                LatLng latLng = new LatLng(locales.get(0).getLatitud(), locales.get(0).getLongitud());
+                CameraPosition position = new CameraPosition.Builder()
+                        .target(latLng)
+                        .zoom(14)
+                        .bearing(0)
+                        .tilt(45)
+                        .build();
+                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(position));
+            }
 
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(position));
-        mMap.addMarker(markerOptions);
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private Marker agregarMarcador(double latitud, double longitud, String titulo) {
+        return mMap.addMarker(new MarkerOptions().position(new LatLng(latitud, longitud)).anchor(0.5f, 0.5f).title(titulo));
     }
 
     @Override

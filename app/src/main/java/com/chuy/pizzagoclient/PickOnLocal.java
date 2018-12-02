@@ -36,7 +36,6 @@ import com.roughike.bottombar.BottomBar;
 public class PickOnLocal extends FragmentActivity implements OnMapReadyCallback,
         GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener, LocationSource.OnLocationChangedListener {
 
-    private static final int LOCATION_PERMISSIONS = 2;
     private GoogleMap mMap;
     LocationManager locationManager;
     double longitudeGPS, latitudeGPS;
@@ -104,7 +103,7 @@ public class PickOnLocal extends FragmentActivity implements OnMapReadyCallback,
         MarkerOptions markerOptions = new MarkerOptions( );
         CameraPosition position = new CameraPosition.Builder()
                 .target(latLng)
-                .zoom(8)
+                .zoom(16)
                 .bearing(0)
                 .tilt(45)
                 .build();
