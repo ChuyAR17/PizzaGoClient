@@ -1,7 +1,5 @@
 package com.chuy.pizzagoclient.fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -14,7 +12,6 @@ import android.view.ViewGroup;
 import com.chuy.pizzagoclient.R;
 import com.chuy.pizzagoclient.adapters.PackAdapterRecycler;
 import com.chuy.pizzagoclient.models.Pack;
-import com.chuy.pizzagoclient.models.Pizza;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

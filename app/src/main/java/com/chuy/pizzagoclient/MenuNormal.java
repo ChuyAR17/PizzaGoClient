@@ -7,16 +7,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.transition.Explode;
 import android.transition.Fade;
-import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.chuy.pizzagoclient.models.Pack;
-import com.chuy.pizzagoclient.models.Pizza;
 import com.roughike.bottombar.BottomBar;
 
 public class MenuNormal extends AppCompatActivity {

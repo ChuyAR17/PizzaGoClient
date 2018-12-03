@@ -1,7 +1,6 @@
 package com.chuy.pizzagoclient;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -17,19 +16,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.transition.Explode;
 import android.transition.Fade;
-import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
-import java.net.ConnectException;
-import java.security.Permission;
-
-import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
-import static android.Manifest.permission.ACCESS_FINE_LOCATION;
-import static android.Manifest.permission.INTERNET;
-import static android.Manifest.permission.MANAGE_DOCUMENTS;
 
 public class SplashScreen extends AppCompatActivity {
 

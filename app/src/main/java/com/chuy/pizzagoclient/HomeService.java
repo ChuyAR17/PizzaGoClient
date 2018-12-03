@@ -38,7 +38,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.roughike.bottombar.BottomBar;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class HomeService extends FragmentActivity implements OnMapReadyCallback , GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener {
 
