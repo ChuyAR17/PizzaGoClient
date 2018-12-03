@@ -17,64 +17,77 @@
             android:name="org.apache.http.legacy"
             android:required="true" />
 
-        <activity android:name=".SplashScreen">
+        <activity
+            android:name=".SplashScreen"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".type_of_service" />
+        <activity
+            android:name=".type_of_service"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Menus"
-            android:parentActivityName=".type_of_service">
+            android:parentActivityName=".type_of_service"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".type_of_service" />
         </activity>
         <activity
             android:name=".MenuNormal"
-            android:parentActivityName=".Menus">
+            android:parentActivityName=".Menus"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Menus" />
         </activity>
         <activity
             android:name=".MakeYourOwn"
-            android:parentActivityName=".Menus">
+            android:parentActivityName=".Menus"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Menus" />
         </activity>
         <activity
             android:name=".Pizzas"
-            android:parentActivityName=".MenuNormal">
+            android:parentActivityName=".MenuNormal"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MenuNormal" />
         </activity>
         <activity
             android:name=".Packs"
-            android:parentActivityName=".MenuNormal">
+            android:parentActivityName=".MenuNormal"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MenuNormal" />
         </activity>
         <activity
             android:name=".Aperitives"
-            android:parentActivityName=".MenuNormal">
+            android:parentActivityName=".MenuNormal"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MenuNormal" />
         </activity>
         <activity
             android:name=".Drinks"
-            android:parentActivityName=".MenuNormal">
+            android:parentActivityName=".MenuNormal"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MenuNormal" />
         </activity>
-        <activity android:name=".OrderReady" />
+        <activity
+            android:name=".OrderReady"
+            android:screenOrientation="portrait" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -95,7 +108,8 @@
             android:label="@string/title_activity_pick_on_local" />
         <activity
             android:name=".HomeService"
-            android:label="@string/title_activity_home_service"></activity>
+            android:label="@string/title_activity_home_service" />
+        <activity android:name=".DetalleOrden"></activity>
     </application>
 
 </manifest>

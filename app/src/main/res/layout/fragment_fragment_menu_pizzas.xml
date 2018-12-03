@@ -27,7 +27,9 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="0dp"
-                android:layout_marginTop="0dp" />
+                android:layout_marginTop="0dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="0dp" />
 
             <TextView
                 android:id="@+id/MenuPizzaViewCost"
@@ -147,13 +149,15 @@
             android:textSize="@dimen/subtitles_size" />
 
         <TextView
+            android:id="@+id/PizzaSubtotal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
-            android:text="$ 110.00 mxm"
+            android:text="0"
             android:textSize="@dimen/normaltext_size" />
 
         <Button
+            android:id="@+id/PizzaAgregarOrden"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center|bottom"
@@ -162,6 +166,11 @@
             android:textColor="@color/primaryWhiteText"
             android:textSize="20sp"
             android:theme="@style/RaisedButton" />
+
+        <TextView
+            android:id="@+id/PizzaRutaImagen"
+            android:layout_width="0dp"
+            android:layout_height="0dp" />
 
     </LinearLayout>
 

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".MakeYourOwn">
 
-    <include layout="@layout/toolbar" />
+    <include layout="@layout/toolbar_maps" />
 
     <FrameLayout
         android:id="@+id/ContainerFragmetsMYO"

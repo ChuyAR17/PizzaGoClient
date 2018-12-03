@@ -1,16 +1,22 @@
 package com.chuy.pizzagoclient;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.transition.Explode;
+import android.transition.Fade;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,6 +56,7 @@ public class HomeService extends FragmentActivity implements OnMapReadyCallback 
     private ImageView backButton, carButton;
     TextView tittle;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +67,12 @@ public class HomeService extends FragmentActivity implements OnMapReadyCallback 
             ActivityCompat.requestPermissions(HomeService.this, permissions, LOCATION_PERMISSIONS);
             return;
         }
+
+        Window window = getWindow();
+        Explode explode = new Explode();
+        Fade fade = new Fade();
+        window.setReturnTransition(explode);
+        window.setEnterTransition(fade);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.MapOnLocal);
@@ -83,8 +96,11 @@ public class HomeService extends FragmentActivity implements OnMapReadyCallback 
 
     private void showToolbar(ImageView back, TextView tittle, ImageView car) {
         back.setOnClickListener(new View.OnClickListener() {
+            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
+
                 startActivity(new Intent(getApplicationContext(), type_of_service.class));
             }
         });

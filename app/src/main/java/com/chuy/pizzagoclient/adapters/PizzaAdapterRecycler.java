@@ -31,8 +31,7 @@ public class PizzaAdapterRecycler extends RecyclerView.Adapter<PizzaAdapterRecyc
     private ArrayList<Pizza> pizzas;
     private int resource;
     private Activity activity;
-    private String rutaImagen;
-    private List<String> ingredientes;
+    private String rutaImagen, ingredientes;
 
     public PizzaAdapterRecycler(ArrayList<Pizza> pizzas, int resource, Activity activity) {
         this.pizzas = pizzas;
@@ -52,12 +51,10 @@ public class PizzaAdapterRecycler extends RecyclerView.Adapter<PizzaAdapterRecyc
         Pizza pizza = pizzas.get(i);
 
         pizzaViewHolder.pizzaTittle.setText(pizza.getNombre());
-        pizzaViewHolder.pizzaCost.setText("$"+pizza.getCosto());
+        pizzaViewHolder.pizzaCost.setText(String.valueOf(pizza.getCosto()));
         Picasso.get().load(pizza.getImagen()).resize(135,135).into(pizzaViewHolder.pizzaPicture);
-
-        //Agregar ingredientes***********************
-
-        rutaImagen = pizza.getImagen();
+        pizzaViewHolder.rutaImagen.setText(pizza.getImagen());
+        pizzaViewHolder.pizzaIngredients.setText(pizza.getIngredientes());
 
     }
 
@@ -71,6 +68,8 @@ public class PizzaAdapterRecycler extends RecyclerView.Adapter<PizzaAdapterRecyc
         ImageView pizzaPicture;
         TextView pizzaTittle;
         TextView pizzaCost;
+        TextView pizzaIngredients;
+        TextView rutaImagen;
         LinearLayout card;
 
         public PizzaViewHolder(@NonNull final View itemView) {
@@ -79,6 +78,8 @@ public class PizzaAdapterRecycler extends RecyclerView.Adapter<PizzaAdapterRecyc
             pizzaTittle = itemView.findViewById(R.id.CardMenuPizzaTittle);
             pizzaCost = itemView.findViewById(R.id.CardMenuPizzaCost);
             pizzaPicture = itemView.findViewById(R.id.CardMenuPizzaPicture);
+            rutaImagen = itemView.findViewById(R.id.CardMenuPizzaRuta);
+            pizzaIngredients = itemView.findViewById(R.id.CardMenuPizzaIngredients);
             card = itemView.findViewById(R.id.CardMenuPizza);
 
             card.setOnClickListener(new View.OnClickListener() {
@@ -86,25 +87,23 @@ public class PizzaAdapterRecycler extends RecyclerView.Adapter<PizzaAdapterRecyc
                 public void onClick(View v) {
                     AppCompatActivity activity = (AppCompatActivity) v.getContext();
 
-                    savePreferences();
+                    SharedPreferences preferences = activity.getSharedPreferences("Pizza-seleccionada", Context.MODE_PRIVATE);
+
+                    SharedPreferences.Editor editor = preferences.edit();
+
+                    editor.clear();
+                    editor.putString("nombre", pizzaTittle.getText().toString());
+                    editor.putString("costo", pizzaCost.getText().toString());
+                    editor.putString("imagen", rutaImagen.getText().toString());
+                    editor.putString("ingredientes", pizzaIngredients.getText().toString());
+
+                    editor.apply();
 
                     FragmentMenuPizzas fragmentMenuPizzas = new FragmentMenuPizzas();
                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.ContainerFragmentPizzas, fragmentMenuPizzas)
                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).addToBackStack(null).commit();
                 }
             });
-        }
-
-        private void savePreferences() {
-            SharedPreferences preferences = activity.getSharedPreferences("Pizza-seleccionada", Context.MODE_PRIVATE);
-
-            SharedPreferences.Editor editor = preferences.edit();
-
-            editor.clear();
-            editor.putString("nombre", pizzaTittle.getText().toString());
-            editor.putString("costo", pizzaCost.getText().toString());
-            editor.putString("imagen", rutaImagen);
-            editor.apply();
         }
     }
 }

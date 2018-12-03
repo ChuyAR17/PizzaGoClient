@@ -8,12 +8,12 @@ public class Pizza {
     private String nombre;
     private String imagen;
     private Long costo;
-    private HashMap<Integer,String> ingredientes;
+    private String ingredientes;
 
     public Pizza() {
     }
 
-    public Pizza(String nombre, String imagen, Long costo, HashMap<Integer, String> ingredientes) {
+    public Pizza(String nombre, String imagen, Long costo, String ingredientes) {
         this.nombre = nombre;
         this.imagen = imagen;
         this.costo = costo;
@@ -44,11 +44,11 @@ public class Pizza {
         this.costo = costo;
     }
 
-    public HashMap<Integer, String> getIngredientes() {
+    public String getIngredientes() {
         return ingredientes;
     }
 
-    public void setIngredientes(HashMap<Integer, String> ingredientes) {
+    public void setIngredientes(String ingredientes) {
         this.ingredientes = ingredientes;
     }
 }

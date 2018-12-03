@@ -5,27 +5,29 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.transition.Explode;
+import android.transition.Fade;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.LocationSource;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -39,13 +41,13 @@ public class PickOnLocal extends FragmentActivity implements OnMapReadyCallback,
     private GoogleMap mMap;
     LocationManager locationManager;
     double longitudeGPS, latitudeGPS;
-    private String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
     Location location;
 
     private BottomBar bottomBar;
     private ImageView backButton, carButton;
     TextView tittle;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +58,12 @@ public class PickOnLocal extends FragmentActivity implements OnMapReadyCallback,
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
+
+        Window window = getWindow();
+        Explode explode = new Explode();
+        Fade fade = new Fade();
+        window.setEnterTransition(fade);
+        window.setReturnTransition(explode);
         location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         //location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
@@ -66,12 +74,10 @@ public class PickOnLocal extends FragmentActivity implements OnMapReadyCallback,
                 .findFragmentById(R.id.MapOnHome);
         mapFragment.getMapAsync(this);
 
-
-        Toast.makeText(getApplicationContext(), "posiciones: " +latitudeGPS + "..." + longitudeGPS, Toast.LENGTH_LONG).show();
-
         backButton = findViewById(R.id.MapBakcButton);
         tittle = findViewById(R.id.MapTittleToolbar);
         carButton = findViewById(R.id.MapCheckOption);
+
 
         showToolbar(backButton, tittle, carButton);
 
@@ -79,8 +85,10 @@ public class PickOnLocal extends FragmentActivity implements OnMapReadyCallback,
 
     private void showToolbar(ImageView back, TextView tittle, ImageView car) {
         back.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
+
                 startActivity(new Intent(getApplicationContext(), type_of_service.class));
             }
         });
@@ -111,6 +119,7 @@ public class PickOnLocal extends FragmentActivity implements OnMapReadyCallback,
         markerOptions.position(latLng)
                 .title("TU")
                 .snippet("Esta es tu ubicacion");
+        markerOptions.draggable(true);
 
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(position));
         mMap.addMarker(markerOptions);

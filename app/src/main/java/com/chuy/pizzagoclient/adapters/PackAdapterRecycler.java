@@ -47,8 +47,12 @@ public class PackAdapterRecycler extends RecyclerView.Adapter<PackAdapterRecycle
         Pack pack = packs.get(i);
 
         packViewHolder.packTittle.setText(pack.getNombre());
-        packViewHolder.packCost.setText("$"+String.valueOf(pack.getCosto()));
+        packViewHolder.packCost.setText(String.valueOf(pack.getCosto()));
         Picasso.get().load(pack.getImagen()).resize(135,135).into(packViewHolder.packPicture);
+        packViewHolder.packAperitivo.setText(pack.getAperitivo());
+        packViewHolder.packBebida.setText(pack.getBebida());
+        packViewHolder.packPizza.setText(pack.getPizza());
+        packViewHolder.packRuta.setText(pack.getImagen());
 
         rutaImagen = pack.getImagen();
     }
@@ -64,6 +68,10 @@ public class PackAdapterRecycler extends RecyclerView.Adapter<PackAdapterRecycle
         LinearLayout card;
         TextView packTittle;
         TextView packCost;
+        TextView packAperitivo;
+        TextView packBebida;
+        TextView packPizza;
+        TextView packRuta;
 
         public PackViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -71,6 +79,10 @@ public class PackAdapterRecycler extends RecyclerView.Adapter<PackAdapterRecycle
             packTittle = itemView.findViewById(R.id.CardMenuPackTittle);
             packCost = itemView.findViewById(R.id.CardMenuPackCost);
             packPicture = itemView.findViewById(R.id.CardMenuPackPicture);
+            packAperitivo = itemView.findViewById(R.id.CardMenuPackApperitivo);
+            packBebida = itemView.findViewById(R.id.CardMenuPackBebida);
+            packPizza = itemView.findViewById(R.id.CardMenuPackPizza);
+            packRuta = itemView.findViewById(R.id.CardMenuPackRuta);
             card = itemView.findViewById(R.id.cardPack);
 
             card.setOnClickListener(new View.OnClickListener() {
@@ -95,7 +107,10 @@ public class PackAdapterRecycler extends RecyclerView.Adapter<PackAdapterRecycle
             editor.clear();
             editor.putString("nombre", packTittle.getText().toString());
             editor.putString("costo", packCost.getText().toString());
-            editor.putString("imagen", rutaImagen);
+            editor.putString("imagen", packRuta.getText().toString());
+            editor.putString("aperitivo", packAperitivo.getText().toString());
+            editor.putString("bebida", packBebida.getText().toString());
+            editor.putString("pizza", packPizza.getText().toString());
             editor.apply();
         }
 

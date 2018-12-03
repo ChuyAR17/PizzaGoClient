@@ -52,7 +52,10 @@
     <string name="order_ready">¡Orden Lista!</string>
     <string name="title_activity_pick_on_local">Map</string>
     <string name="my_ubication">Mi Ubicación</string>
-    <string name="pick_on_local">¿Aquí quieres tu pedido?</string>
+    <string name="pick_on_local">¿Donde quieres tu pedido?</string>
     <string name="title_activity_home_service">Map</string>
+    <string name="hecho">Listo</string>
+    <string name="DetallesOrden">Detalle de la orden</string>
+    <string name="comprar">COMPRAR</string>
 
 </resources>

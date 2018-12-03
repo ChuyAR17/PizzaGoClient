@@ -12,8 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginRight="@dimen/lateral_margin"
-        android:layout_marginLeft="@dimen/lateral_margin"
-        android:layout_marginTop="@dimen/lateral_margin">
+        android:layout_marginLeft="@dimen/lateral_margin">
 
     </android.support.v7.widget.RecyclerView>
 

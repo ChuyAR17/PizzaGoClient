@@ -57,7 +57,7 @@
                 android:layout_marginEnd="245dp"
                 android:layout_marginRight="245dp"
                 android:layout_marginBottom="12dp"
-                android:text="$ 110.00 mxm"
+                android:text="110.00"
                 android:textColor="@color/primaryWhiteText"
                 android:textSize="@dimen/normaltext_size" />
 
@@ -137,13 +137,15 @@
             android:layout_marginLeft="@dimen/lateral_margin"/>
 
         <TextView
+            android:id="@+id/PackSubtotal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="$ 110.00 mxm"
+            android:text="0"
             android:textSize="@dimen/normaltext_size"
             android:layout_marginLeft="40dp"/>
 
         <Button
+            android:id="@+id/packAgregar"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:text="@string/add_order"

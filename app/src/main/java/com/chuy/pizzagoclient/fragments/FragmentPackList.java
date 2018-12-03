@@ -41,6 +41,8 @@ public class FragmentPackList extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_fragment_pack_list, container, false);
 
+        setRetainInstance(true);
+
         database = FirebaseDatabase.getInstance().getReference();
 
         packRecycler = view.findViewById(R.id.list_packs);

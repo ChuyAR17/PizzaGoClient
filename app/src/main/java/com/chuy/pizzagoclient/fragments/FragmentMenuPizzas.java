@@ -1,6 +1,7 @@
 package com.chuy.pizzagoclient.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.chuy.pizzagoclient.MenuNormal;
 import com.chuy.pizzagoclient.R;
 import com.squareup.picasso.Picasso;
 
@@ -21,11 +23,12 @@ public class FragmentMenuPizzas extends Fragment {
     private int porciones;
     private String numero;
     private Button mas, menos;
-    public TextView noPociones;
+    public TextView noPociones, subtotal;
     private String nombre, costo, imagen, ingredientes;
 
-    private TextView pizzaName, pizzaCost;
+    private TextView pizzaName, pizzaCost, pizzaIngredients, rutaImagen;
     private ImageView pizzaImage;
+    private Button agregar;
 
     public FragmentMenuPizzas() {
         // Required empty public constructor
@@ -37,15 +40,23 @@ public class FragmentMenuPizzas extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_fragment_menu_pizzas, container, false);
 
+        setRetainInstance(true);
+
         getSharedPreferences();
 
         pizzaName = view.findViewById(R.id.MenuPizzaViewTittle);
         pizzaCost = view.findViewById(R.id.MenuPizzaViewCost);
         pizzaImage = view.findViewById(R.id.MenuPizzaViewImage);
+        pizzaIngredients = view.findViewById(R.id.MenuPizzaViewIngredients);
+        subtotal = view.findViewById(R.id.PizzaSubtotal);
+        rutaImagen = view.findViewById(R.id.PizzaRutaImagen);
+        agregar = view.findViewById(R.id.PizzaAgregarOrden);
 
         Picasso.get().load(imagen).fit().into(pizzaImage);
         pizzaName.setText(nombre);
-        pizzaCost.setText(costo + " mxn");
+        pizzaCost.setText(costo);
+        pizzaIngredients.setText(ingredientes);
+        rutaImagen.setText(imagen);
 
         mas = view.findViewById(R.id.PizzaButtonMas);
         menos = view.findViewById(R.id.PizzaButtonMenos);
@@ -56,7 +67,10 @@ public class FragmentMenuPizzas extends Fragment {
             public void onClick(View v) {
                 numero = noPociones.getText().toString();
                 sumar();
+                int total = Integer.parseInt(pizzaCost.getText().toString()) * porciones;
                 noPociones.setText(String.valueOf(porciones));
+                subtotal.setText(String.valueOf(total));
+
             }
         });
 
@@ -66,6 +80,29 @@ public class FragmentMenuPizzas extends Fragment {
                 numero = noPociones.getText().toString();
                 restar();
                 noPociones.setText(String.valueOf(porciones));
+                if (porciones>0){
+                    int total =Integer.parseInt(subtotal.getText().toString()) - Integer.parseInt(pizzaCost.getText().toString());
+                    subtotal.setText(String.valueOf(total));
+                }else if (noPociones.getText().toString().equals("0")){
+                    subtotal.setText("0");
+                }
+            }
+        });
+
+        agregar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences preferences = getActivity().getSharedPreferences("CrearOrden", Context.MODE_PRIVATE);
+
+                SharedPreferences.Editor editor = preferences.edit();
+
+                editor.clear();
+
+                editor.putString(pizzaName.getText().toString(), "-" + Integer.parseInt(subtotal.getText().toString()));
+
+                editor.apply();
+
+                startActivity(new Intent(getContext(), MenuNormal.class));
             }
         });
 
@@ -78,6 +115,7 @@ public class FragmentMenuPizzas extends Fragment {
         nombre = preferences.getString("nombre", "Pizza default");
         costo = preferences.getString("costo", "150.00");
         imagen = preferences.getString("imagen", "no hay imagen");
+        ingredientes = preferences.getString("ingredientes", "no hay");
 
     }
 

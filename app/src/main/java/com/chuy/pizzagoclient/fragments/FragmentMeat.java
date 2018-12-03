@@ -42,6 +42,8 @@ public class FragmentMeat extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fragment_meat, container, false);
 
+        setRetainInstance(true);
+
         meatRecycler = view.findViewById(R.id.list_meats);
 
         database = FirebaseDatabase.getInstance().getReference();

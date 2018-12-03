@@ -46,6 +46,16 @@
                     android:layout_marginTop="@dimen/tittle_top_margin"
                     android:layout_marginLeft="40dp"/>
 
+                <TextView
+                    android:id="@+id/CardMenuPizzaRuta"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp" />
+
+                <TextView
+                    android:id="@+id/CardMenuPizzaIngredients"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp" />
+
             </LinearLayout>
 
         </LinearLayout>
